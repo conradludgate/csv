@@ -3,6 +3,7 @@ package csv
 import (
 	"math"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -108,4 +109,158 @@ func TestFailNoUnmarshal(t *testing.T) {
 	err := Unmarshal([]byte(data), &output)
 	assert.EqualError(t, err, "Decode: csv.NoMarshal is not a valid field type - try implement UnmarshalCSV for it")
 	assert.Empty(t, output)
+}
+
+func TestDecodeFailInt(t *testing.T) {
+	type Data struct {
+		A int
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailInt8(t *testing.T) {
+	type Data struct {
+		A int8
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailInt16(t *testing.T) {
+	type Data struct {
+		A int16
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailInt32(t *testing.T) {
+	type Data struct {
+		A int32
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailInt64(t *testing.T) {
+	type Data struct {
+		A int64
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseInt: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailUint(t *testing.T) {
+	type Data struct {
+		A uint
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailUint8(t *testing.T) {
+	type Data struct {
+		A uint8
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailUint16(t *testing.T) {
+	type Data struct {
+		A uint16
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailUint32(t *testing.T) {
+	type Data struct {
+		A uint32
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailUint64(t *testing.T) {
+	type Data struct {
+		A uint64
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseUint: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailBool(t *testing.T) {
+	type Data struct {
+		A bool
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseBool: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailFloat32(t *testing.T) {
+	type Data struct {
+		A float32
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailFloat64(t *testing.T) {
+	type Data struct {
+		A float64
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "strconv.ParseFloat: parsing \"a\": invalid syntax")
+}
+
+func TestDecodeFailTime(t *testing.T) {
+	type Data struct {
+		A time.Time
+	}
+	data := "A\na"
+
+	output := []Data{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "parsing time \"a\" as \"2006-01-02T15:04:05Z07:00\": cannot parse \"a\" as \"2006\"")
 }
