@@ -265,8 +265,8 @@ goodbye world,-9223372036854775808,2020-07-03T16:39:44+01:00,value2|2`)
 }
 
 func ExampleMarshal() {
-	time1, _ := time.Parse(time.RFC3339, "2006-01-02T15:04:05-07:00")
-	time2, _ := time.Parse(time.RFC3339, "2020-07-03T16:39:44+01:00")
+	time1 := time.Date(2006, 01, 02, 15, 04, 05, 0, time.FixedZone("MST", -7*60*60))
+	time2 := time.Date(2020, 07, 03, 16, 39, 44, 0, time.FixedZone("BST", 1*60*60))
 
 	data := []Data{
 		{
@@ -298,8 +298,8 @@ func ExampleMarshal() {
 }
 
 func ExampleEncoder_Encode() {
-	time1, _ := time.Parse(time.RFC3339, "2006-01-02T15:04:05-07:00")
-	time2, _ := time.Parse(time.RFC3339, "2020-07-03T16:39:44+01:00")
+	time1 := time.Date(2006, 01, 02, 15, 04, 05, 0, time.FixedZone("MST", -7*60*60))
+	time2 := time.Date(2020, 07, 03, 16, 39, 44, 0, time.FixedZone("BST", 1*60*60))
 
 	data := []Data{
 		{
@@ -331,8 +331,8 @@ func ExampleEncoder_Encode() {
 }
 
 func ExampleEncoder_SetDelimiter() {
-	time1, _ := time.Parse(time.RFC3339, "2006-01-02T15:04:05-07:00")
-	time2, _ := time.Parse(time.RFC3339, "2020-07-03T16:39:44+01:00")
+	time1 := time.Date(2006, 01, 02, 15, 04, 05, 0, time.FixedZone("MST", -7*60*60))
+	time2 := time.Date(2020, 07, 03, 16, 39, 44, 0, time.FixedZone("BST", 1*60*60))
 
 	data := []Data{
 		{
