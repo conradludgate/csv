@@ -118,6 +118,5 @@ then proceeds to write the contents of the slice as CSV data.
 
 ## TODO:
 
-More tests need to be written, testing the usage of the built in CSV library's decoding/encoding capabilities.
-
-Support more of the stdlib's types for marshalling and unmarshalling.
+* Support more of the stdlib's types for marshalling and unmarshalling.
+* Support more data types than just slices of structs
