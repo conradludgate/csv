@@ -3,6 +3,8 @@ A CSV marshaling and unmarshaling library for Go, with a similar API to [encodin
 
 ## Usage
 
+To install, run `go get github.com/conradludgate/csv`
+
 ### Unmarshal
 
 Takes in CSV data with a header row and will unmarshal it into a slice of a struct that matches the headers
@@ -110,3 +112,9 @@ goodbye world,-9223372036854775808,2020-07-03T16:39:44+01:00,value2|2`))
 Marshal works in a very similar but the opposite way.
 Takes in a slice or array of a struct, writes the header row of all the fields
 then proceeds to write the contents of the slice as CSV data.
+
+## TODO:
+
+More tests need to be written, testing the usage of the built in CSV library's decoding/encoding capabilities.
+
+Support more of the stdlib's types for marshalling and unmarshalling.
