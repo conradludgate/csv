@@ -141,10 +141,7 @@ func validMarshalType(ty reflect.Type) bool {
 func getValue(field reflect.Value) string {
 	switch field.Type().Kind() {
 	case reflect.Bool:
-		if field.Bool() {
-			return "true"
-		}
-		return "false"
+		return fmt.Sprint(field.Bool())
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return strconv.FormatInt(field.Int(), 10)
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:

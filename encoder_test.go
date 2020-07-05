@@ -144,3 +144,40 @@ func TestEncodePass_NoCRLF(t *testing.T) {
 
 	assert.Equal(t, expected, buf.String())
 }
+
+func TestEncodePassPointers(t *testing.T) {
+	time1 := time.Date(2006, 01, 02, 15, 04, 05, 0, time.FixedZone("MST", -7*60*60))
+	time2 := time.Date(2020, 07, 03, 16, 39, 44, 0, time.FixedZone("BST", 1*60*60))
+
+	data := []Data{
+		{
+			Foo:  "hello world",
+			Bar:  9223372036854775807,
+			Time: time1,
+			Custom: Custom{
+				A: "value1",
+				B: 1,
+			},
+		},
+		{
+			Foo:  "goodbye world",
+			Bar:  -9223372036854775808,
+			Time: time2,
+			Custom: Custom{
+				A: "value2",
+				B: 2,
+			},
+		},
+	}
+
+	expected := `Foo,bar,Time,Custom
+hello world,9223372036854775807,2006-01-02T15:04:05-07:00,value1|1
+goodbye world,-9223372036854775808,2020-07-03T16:39:44+01:00,value2|2
+`
+
+	datap := &data
+
+	bytes, err := Marshal(&datap)
+	assert.Nil(t, err)
+	assert.Equal(t, expected, string(bytes))
+}
