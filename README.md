@@ -1,6 +1,9 @@
 # csv
 A CSV marshaling and unmarshaling library for Go, with a similar API to [encoding/json](https://pkg.go.dev/encoding/json)
 
+[![codecov](https://img.shields.io/codecov/c/gh/conradludgate/csv?style=flat-square)](https://codecov.io/gh/conradludgate/csv)
+[![docs](https://img.shields.io/github/v/tag/conradludgate/csv?label=docs&style=flat-square)](https://pkg.go.dev/github.com/conradludgate/csv?tab=doc)
+
 ## Usage
 
 To install, run `go get github.com/conradludgate/csv`
