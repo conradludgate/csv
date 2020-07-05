@@ -1,6 +1,7 @@
 package csv
 
 import (
+	"errors"
 	"math"
 	"testing"
 	"time"
@@ -109,6 +110,35 @@ func TestFailNoUnmarshal(t *testing.T) {
 	err := Unmarshal([]byte(data), &output)
 	assert.EqualError(t, err, "Decode: csv.NoMarshal is not a valid field type - try implement UnmarshalCSV for it")
 	assert.Empty(t, output)
+}
+
+type FailReader struct{}
+
+func (r *FailReader) Read(_ []byte) (n int, err error) {
+	return 0, errors.New("error reading")
+}
+
+func TestFailRead(t *testing.T) {
+	reader := &FailReader{}
+	decoder := NewDecoder(reader)
+	output := []BuiltInTypes{}
+	err := decoder.Decode(&output)
+	assert.EqualError(t, err, "error reading")
+	assert.Empty(t, output)
+}
+
+type FailWriter struct{}
+
+func (r *FailWriter) Write(_ []byte) (n int, err error) {
+	return 0, errors.New("error writing")
+}
+
+func TestFailWrite(t *testing.T) {
+	writer := &FailWriter{}
+	encoder := NewEncoder(writer)
+	input := []BuiltInTypes{}
+	err := encoder.Encode(input)
+	assert.EqualError(t, err, "error writing")
 }
 
 func TestDecodeFailInt(t *testing.T) {
