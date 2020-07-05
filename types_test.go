@@ -1,6 +1,7 @@
 package csv
 
 import (
+	"bytes"
 	"errors"
 	"math"
 	"testing"
@@ -137,6 +138,44 @@ func TestFailWrite(t *testing.T) {
 	writer := &FailWriter{}
 	encoder := NewEncoder(writer)
 	input := []BuiltInTypes{}
+	err := encoder.Encode(input)
+	assert.EqualError(t, err, "error writing")
+}
+
+func TestFailWrite2(t *testing.T) {
+	writer := bytes.NewBuffer([]byte{})
+	encoder := NewEncoder(writer)
+	encoder.SetDelimiter(0)
+	input := []BuiltInTypes{}
+	err := encoder.Encode(input)
+	assert.EqualError(t, err, "csv: invalid field or comment delimiter")
+}
+
+func TestFailWrite3(t *testing.T) {
+	writer := &FailWriter{}
+	encoder := NewEncoder(writer)
+	input := []BuiltInTypes{}
+
+	// Make lots of data so the underlying writer buffer is forced to flush automatically
+	for i := 0; i < 100; i++ {
+		input = append(input, BuiltInTypes{
+			A: "a",
+			B: -9223372036854775808,
+			C: -2147483648,
+			D: -32768,
+			E: -128,
+			F: -1,
+			G: 18446744073709551615,
+			H: 4294967295,
+			I: 65535,
+			J: 255,
+			K: 1,
+			L: true,
+			M: 3.141592653589793,
+			N: 2.718282,
+		})
+	}
+
 	err := encoder.Encode(input)
 	assert.EqualError(t, err, "error writing")
 }
