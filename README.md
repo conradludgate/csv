@@ -118,5 +118,5 @@ then proceeds to write the contents of the slice as CSV data.
 
 ## TODO:
 
-* Support more of the stdlib's types for marshalling and unmarshalling.
-* Support more data types than just slices of structs
+* Support more of the stdlib's types for marshalling and unmarshalling. [(issue #2)](https://github.com/conradludgate/csv/issues/2)
+* Support more data types than just slices of structs. [(issue #1)](https://github.com/conradludgate/csv/issues/1)
