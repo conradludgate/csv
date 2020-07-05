@@ -71,7 +71,7 @@ func (e *Encoder) Encode(v interface{}) error {
 			}
 
 			if !validMarshalType(field.Type) {
-				return fmt.Errorf("Decode: %v is not a valid field type - try implement FromString for it", field.Type)
+				return fmt.Errorf("Encode: %v is not a valid field type - try implement MarshalCSV for it", field.Type)
 			}
 
 			fields = append(fields, column)

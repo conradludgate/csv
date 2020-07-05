@@ -78,3 +78,34 @@ a,-9223372036854775808,-2147483648,-32768,-128,-1,18446744073709551615,429496729
 
 	assert.Equal(t, expectedOutput2, output2)
 }
+
+type BadData struct {
+	Column NoMarshal
+}
+
+type NoMarshal struct {
+	A string
+}
+
+func TestFailNoMarshal(t *testing.T) {
+	data := []BadData{
+		{
+			Column: NoMarshal{
+				A: "fail",
+			},
+		},
+	}
+
+	b, err := Marshal(data)
+	assert.EqualError(t, err, "Encode: csv.NoMarshal is not a valid field type - try implement MarshalCSV for it")
+	assert.Empty(t, b)
+}
+
+func TestFailNoUnmarshal(t *testing.T) {
+	data := "A\nfail"
+
+	output := []BadData{}
+	err := Unmarshal([]byte(data), &output)
+	assert.EqualError(t, err, "Decode: csv.NoMarshal is not a valid field type - try implement UnmarshalCSV for it")
+	assert.Empty(t, output)
+}

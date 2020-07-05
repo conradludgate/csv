@@ -65,9 +65,6 @@ func (d *Decoder) Decode(v interface{}) error {
 	ty := value.Type().Elem()
 
 	switch ty.Kind() {
-	case reflect.Array:
-		// [n]struct { ... fields FromString }
-		return fmt.Errorf("Decode: todo array types %v", ty)
 	case reflect.Slice:
 		// []struct { ... fields FromString }
 		elem := ty.Elem()
@@ -129,10 +126,6 @@ func (d *Decoder) Decode(v interface{}) error {
 
 			value.Elem().Set(reflect.Append(value.Elem(), record.Elem()))
 		}
-
-	case reflect.Map:
-		// map[FromString][]FromString
-		return fmt.Errorf("Decode: todo map types %v", ty)
 	default:
 		return fmt.Errorf("Decode: could not decode into type %v", ty)
 	}

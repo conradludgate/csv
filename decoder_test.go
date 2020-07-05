@@ -166,3 +166,36 @@ value2|2,goodbye world,-9223372036854775808,2020-07-03T16:39:44+01:00`))
 
 	assert.Equal(t, expected, v)
 }
+
+func TestDecodeFailNotPointer(t *testing.T) {
+	data := bytes.NewReader([]byte(`Foo,bar,Time,Custom
+hello world,9223372036854775807,2006-01-02T15:04:05-07:00
+goodbye world,-9223372036854775808,2020-07-03T16:39:44+01:00,value2|2`))
+
+	decoder := NewDecoder(data)
+	var v []Data
+	err := decoder.Decode(v)
+	assert.EqualError(t, err, "Decode: could not decode into type []csv.Data - must be a pointer")
+}
+
+func TestDecodeFailNotSlicePointer(t *testing.T) {
+	data := bytes.NewReader([]byte(`Foo,bar,Time,Custom
+hello world,9223372036854775807,2006-01-02T15:04:05-07:00
+goodbye world,-9223372036854775808,2020-07-03T16:39:44+01:00,value2|2`))
+
+	decoder := NewDecoder(data)
+	var v Data
+	err := decoder.Decode(&v)
+	assert.EqualError(t, err, "Decode: could not decode into type csv.Data")
+}
+
+func TestDecodeFailNotStructSlicePointer(t *testing.T) {
+	data := bytes.NewReader([]byte(`Foo,bar,Time,Custom
+hello world,9223372036854775807,2006-01-02T15:04:05-07:00
+goodbye world,-9223372036854775808,2020-07-03T16:39:44+01:00,value2|2`))
+
+	decoder := NewDecoder(data)
+	var v []string
+	err := decoder.Decode(&v)
+	assert.EqualError(t, err, "Decode: could not decode into type []string - expected a slice of structs")
+}
